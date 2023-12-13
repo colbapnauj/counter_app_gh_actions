@@ -69,16 +69,6 @@ jobs:
           echo "storePassword=${{ secrets.STORE_PASSWORD }}" >> android/key.properties
           echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/key.properties
           echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> android/key.properties
-      - name: Save key.properties
-        uses: actions/upload-artifact@v2
-        with:
-          name: key.properties
-          path: android/key.properties
-      - name: Save upload-keystore.jks
-        uses: actions/upload-artifact@v2
-        with:
-          name: upload-keystore.jks
-          path: ${{ steps.android_keystore.outputs.filePath }}
       # setup java
       - uses: actions/setup-java@v4
         with:
@@ -103,3 +93,10 @@ jobs:
         with:
           name: app-release.apk
           path: build/app/outputs/flutter-apk/app-release.apk
+      - name: upload artifact to Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{ secrets.FIREBASE_APP_ID }}
+          token: ${{ secrets.FIREBASE_CREDENTIAL_FILE_CONTENT }}
+          groups: dev testers
+          file: build/app/outputs/flutter-apk/app-release.apk
