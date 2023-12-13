@@ -10,7 +10,8 @@ jobs:
     name: Create version number
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v3
       # 2
       - name: Install GitVersion
         uses: gittools/actions/gitversion/setup@v0.9.7
