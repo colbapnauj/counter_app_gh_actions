@@ -65,11 +65,10 @@ jobs:
           encodedString: ${{ secrets.KEYSTORE_BASE64 }}
       - name: Create key.properties
         run: |
-          echo "storePassword=${{ secrets.STORE_PASSWORD }}" > android/key.properties
+          echo "storeFile=${{ steps.android_keystore.outputs.filePath }}" > android/key.properties
+          echo "storePassword=${{ secrets.STORE_PASSWORD }}" >> android/key.properties
           echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/key.properties
           echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> android/key.properties
-          echo "storeFile=${{ steps.android_keystore.outputs.filePath }}" >> android/key.properties
-          cat android/key.properties
       # setup java
       - uses: actions/setup-java@v4
         with:
