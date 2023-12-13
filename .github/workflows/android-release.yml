@@ -69,30 +69,40 @@ jobs:
           echo "storePassword=${{ secrets.STORE_PASSWORD }}" >> android/key.properties
           echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/key.properties
           echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> android/key.properties
-      # setup java
-      - uses: actions/setup-java@v4
-        with:
-          distribution: "temurin"
-          java-version: "17"
-          cache: gradle # optional
-      # setup flutter
-      - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.10.1'
-          channel: 'stable'
-          cache: true
-      # get dependencies
-      - name: Get dependencies
-        run: flutter pub get
-
-      # build apk
-      - name: Build APK
-        run: flutter build apk --release
-
-      # upload apk
-      - name: Upload APK
+      - name: Save key.properties
         uses: actions/upload-artifact@v2
         with:
-          name: app-release.apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+          name: key.properties
+          path: android/key.properties
+      - name: Save upload-keystore.jks
+        uses: actions/upload-artifact@v2
+        with:
+          name: upload-keystore.jks
+          path: ${{ steps.android_keystore.outputs.filePath }}}
+      # # setup java
+      # - uses: actions/setup-java@v4
+      #   with:
+      #     distribution: "temurin"
+      #     java-version: "17"
+      #     cache: gradle # optional
+      # # setup flutter
+      # - uses: actions/checkout@v3
+      # - uses: subosito/flutter-action@v2
+      #   with:
+      #     flutter-version: '3.10.1'
+      #     channel: 'stable'
+      #     cache: true
+      # # get dependencies
+      # - name: Get dependencies
+      #   run: flutter pub get
+# 
+      # # build apk
+      # - name: Build APK
+      #   run: flutter build apk --release
+# 
+      # # upload apk
+      # - name: Upload APK
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: app-release.apk
+      #     path: build/app/outputs/flutter-apk/app-release.apk
