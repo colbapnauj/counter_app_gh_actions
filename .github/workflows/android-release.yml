@@ -86,7 +86,9 @@ jobs:
           java-version: "17"
           cache: gradle # optional
       # setup flutter
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.10.1'
