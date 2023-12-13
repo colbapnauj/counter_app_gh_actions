@@ -1,0 +1,22 @@
+name: Twilio Action Notify
+on:
+  push:
+    branches: ["action_twilio-sms"]
+  pull_request:
+    branches: ["action_twilio-sms"]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send success notification sms
+        uses: twilio-labs/actions-sms@v1
+        with:
+          fromPhoneNumber: ${{ secrets.TWILIO_FROM_PHONE_NUMBER }}
+          toPhoneNumber: ${{ secrets.TWILIO_TO_PHONE_NUMBER }}
+          message: 'Android build success!'
+        env:
+          TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+          TWILIO_API_KEY: ${{ secrets.TWILIO_API_KEY }}
+          TWILIO_AUTH_SECRET: ${{ secrets.TWILIO_AUTH_SECRET }}
+        if: ${{ needs.build.result == 'success'}}
