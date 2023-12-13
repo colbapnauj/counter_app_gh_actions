@@ -24,7 +24,7 @@ jobs:
         run: echo ${{ steps.gitversion.outputs.nuGetVersion }} > version.txt
       # 4
       - name: Upload version.txt
-        uses: actions/upload-artifacts@v2
+        uses: actions/upload-artifact@v2
         with:
           name: gitversion
           path: version.txt
