@@ -35,12 +35,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # checkout
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
       - name: Get version.txt
         uses: actions/download-artifact@v2
         with:
           name: gitversion
-          path: version.txt
       # 3
       - name: Create new file without newline char from version.txt
         run: tr -d '\n' < version.txt > version1.txt
