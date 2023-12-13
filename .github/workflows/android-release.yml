@@ -1,0 +1,31 @@
+name: Android Release
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # checkout
+      - uses: actions/checkout@v4
+      # setup java
+      - uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
+      # setup flutter
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.10.1'
+          channel: 'stable'
+      # get dependencies
+      - name: Get dependencies
+        run: flutter pub get
+
+      # build apk
+      - name: Build APK
+        run: flutter build apk --release
