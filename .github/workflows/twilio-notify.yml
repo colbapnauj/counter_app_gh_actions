@@ -7,7 +7,7 @@ on:
 
 jobs:
   notify:
-    runs-on: JEAN
+    runs-on: self-hosted
     steps:
       - name: Send success notification sms
         uses: twilio-labs/actions-sms@v1
